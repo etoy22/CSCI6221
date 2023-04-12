@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign Up</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <style>
+            body{
+                font-family: bradley hand, cursive;
+                background-image: url("https://static.vecteezy.com/system/resources/previews/003/497/193/original/internet-cyber-security-connection-concept-background-free-vector.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                background-position: center;
+            }
+            span{
+                color: #ffffff;
+            }
+            .page{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            input{
+    height: 50px;
+    width: 75%;
+    border-radius: 25px;
+    border: none;
+    border-color: #ffffff;
+    padding: 0 0 0 40px;
+    background: rgba(255,255,255,0.1)
+}
+.c1,.c2,.c3,.c4,.c5,.c6{
+    display:inline-block;
+    width:48%;
+    vertical-align: top;
+  }
+  .log{
+  width: 317px;
+  cursor: pointer;
+  font-size: 15px;
+  color: beige;
+  text-align: center left;
+  display: block;
+  margin: auto;
+  padding: 0px;
+}
+.cn{
+    text-align: left;
+  display: block;
+  margin: auto;
+  padding: 0px;
+  font-size: 34px;
+}
+::-webkit-input-placeholder{
+  color:beige;
+}
+i{
+  position: relative;
+  left:-317px;
+  color:yellow;
+}
+a:link {
+  color: yellowgreen;
+  background-color: transparent;
+}
+a:visited {
+  color: yellowgreen;
+  background-color: transparent;
+}
+a:hover {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+        </style>
+        <script>
+            function match() {
+                const pswd = document.querySelector('input[name=password]');
+                const cpswd = document.querySelector('input[name=ConfirmPassword]');
+                if (cpswd.value === pswd.value) {
+                    cpswd.setCustomValidity('');
+                } else {
+                    cpswd.setCustomValidity('Passwords do not match');
+                }
+            }           
+            
+        </script>
+    </head>
+    <body>
+        <form action="#" class="page" id='signup-form'>
+            <div class="cn">
+                <span style="color: yellowgreen;">New User?</span>
+                </div>
+                <br>
+        <div class="c1">
+            <span>First Name</span>
+            <br>
+            <input type="text" name="first_name" id="first_name" placeholder="Enter your First Name" required>
+        </div>
+        <div class="c2">
+            <span>Last Name</span>
+            <br>
+            <input type="text" name="last_name" id="last_name"  placeholder="Enter your Last Name" required>
+        </div>
+        <div class="c3">
+            <span>Email</span>
+            <br>
+            <input id="email" type="email" placeholder =" Enter your email" name="email" required>
+        </div>
+        <div class="c4">
+            <span>Username</span>
+            <br>
+            <input type="text" name="username" id="username" pattern="^[a-zA-Z0-9]{3,15}$" placeholder="Enter your Username" title="Username may only contain letters and numbers. The username must be at least 3 characters long." required>
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="c5">
+            <span>Password</span>
+            <br>
+            <input type="password" name="password" id ="password" placeholder="Enter your Password" onChange="match()" required>
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+        <div class="c6">
+            <span>Confirm Your Password</span>
+            <br>
+            <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Your Password" onChange="match()" required>
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+            <br>
+            <br>
+        <div>
+            <a href="login" class="log1">Existing User?</a>
+        </div>
+            <input class="log" type="submit" name="Sign Up" id="signUpButton" value="Sign up">
+    </form>
+    </body>
+    <script>
+        const signupForm = document.querySelector('#signup-form');
+        const signupButton = document.querySelector('#signUpButton');
+        
+        signupButton.addEventListener('click', function(event) {
+          const firstNameInput = document.querySelector('#first_name');
+          console.log(document.querySelector('first_name'));
+          console.log(document.querySelector('#first_name'));
+
+          const lastNameInput = document.querySelector('#last_name');
+          const emailInput = document.querySelector('#email');
+          const usernameInput = document.querySelector('#username');
+          const passwordInput = document.querySelector('#password');
+          const confirmPasswordInput = document.querySelector('#ConfirmPassword');
+          if (firstNameInput.checkValidity() && lastNameInput.checkValidity() && emailInput.checkValidity() && usernameInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity()) {
+          console.log("Hello, World!");
+          event.preventDefault();
+          const formData = new FormData(signupForm);
+          fetch('/newUser', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            const success = data.success;
+            if (success) {
+                window.alert('Signup successful!');
+            } else {
+                window.alert('Signup failed. Email or Username already in use.');
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+          }
+        });
+      </script>
+</html>

@@ -2,7 +2,7 @@ import hashlib
 import sqlite3
 
 
-def addNewAccount(username,password):
+def addNewAccount(first_name,last_name,email,username,password):
     #Varriable to determine if a unique username went through
     passed = True
 
@@ -15,22 +15,19 @@ def addNewAccount(username,password):
 
     # Attempt to login
     try:
-        c.execute('INSERT INTO users (username, hashed_password) VALUES (?, ?)', (username, hashed_password))
+        c.execute('INSERT INTO users (fname, lname, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)', (first_name,last_name,email,username, hashed_password))
         conn.commit()
-
-
         c.execute("SELECT id FROM users WHERE username = ?", (username,))
         id = c.fetchone()
+        print(id[0])
         conn.close()
-        createNewLibrary(id)
+        createNewLibrary(id[0])
 
 
     except sqlite3.IntegrityError:
         print("Error: Duplicate value for unique column")
         passed = False
         conn.close()
-
-
 
     return passed
 
@@ -100,6 +97,8 @@ def addMovies(accNum,movieID):
     conn.commit()
     conn.close()
 
+
+addMovies(1,278)
 
 
 # print("admin passowrd")

@@ -1,7 +1,10 @@
+from PIL import Image
+from pytesseract import pytesseract
 import requests
 import json
+import os
 
-# Replace YOUR_API_KEY with your TMDb API key
+# Replace syour TMDb API key
 api_key = '03645002b465428658913956c71ee9e7'
 
 def movieSearch(movie_query):
@@ -14,14 +17,7 @@ def movieSearch(movie_query):
     # Parse the JSON response
     search_results = json.loads(response.text)
 
-    # print("-------")
-    # print("Movie Info that is being used")
-    # Print the search results id
     for result in search_results['results']:
-        # print("ID:", result['id'],end=" ")
-        # print("Title:", result['title'],end=" ")
-        # print("Release Date:", result['release_date'],end=" ")
-        # print("Overview:", result['overview'])
         my_dict = {}
         my_dict['ID'] = result['id']
         my_dict['Title'] = result['title']
@@ -51,21 +47,15 @@ def actorSearch(actor_name):
             my_dict = {}
             my_dict['ID'] = result['id']
             my_dict['Title'] = result['title']
-            # print("ID:", result['id'],end=" ")
-            # print("Title:", result['title'],end=" ")
             try:
-                # print("Release Date:", result['release_date'],end=" ")
                 my_dict['Release Date'] = result['release_date']
             except:
                 pass
-            # print("Overview:", result['overview'])
             my_dict['Overview'] = result['overview']
-            # print("----------")
             list.append(my_dict)
     return list
 
 def actorMovieSearch(actor_name,movie_title):
-
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
     response = requests.get(f'https://api.themoviedb.org/3/search/person?api_key={api_key}&query={actor_name}')
@@ -85,24 +75,43 @@ def actorMovieSearch(actor_name,movie_title):
                 my_dict = {}
                 my_dict['ID'] = result['id']
                 my_dict['Title'] = result['title']
-                # print("ID:", result['id'],end=" ")
-                # print("Title:", result['title'],end=" ")
                 try:
-                    # print("Release Date:", result['release_date'],end=" ")
                     my_dict['Release Date'] = result['release_date']
                 except:
-                    pass
-                # print("Overview:", result['overview'])
+                    my_dict['Release Date'] = "N/A"
                 my_dict['Overview'] = result['overview']
                 list.append(my_dict)
-                # print("----------")
         return list
 
-print(movieSearch("The Shawshank Redemption"))
-print(movieSearch("The Godfather"))
-print(movieSearch("Forrest Gump"))
-print(movieSearch("The Dark Knight"))
-print(movieSearch("Inception"))
+# Takes an img and then returns the movies that are listed
+def imageSearch(img):
+    path_to_tesseract = r"Tesseract-OCR\tesseract.exe"
+    pytesseract.tesseract_cmd = path_to_tesseract
+
+    # Open image and then try to convert the image to text 
+    screen = Image.open("screenshot.png")
+    text = pytesseract.image_to_string(screen)
+
+    lines = text.splitlines()
+    searchTerms = []
+    for line in lines:
+        if line.strip():  # Check if the line is not empty
+            searchTerms.append(line)
+            
+    value = [] 
+    for search in searchTerms:
+        hold = (movieSearch(search))
+        if len(hold)!=0:
+            value.extend(hold)
+
+    
+    return value
+
+# print(movieSearch("The Shawshank Redemption"))
+# print(movieSearch("The Godfather"))
+# print(movieSearch("Forrest Gump"))
+# print(movieSearch("The Dark Knight"))
+# print(movieSearch("Inception"))
 
 # print("Movie and Actor Search")
 # temp= actorMovieSearch("keanu","matrix")
