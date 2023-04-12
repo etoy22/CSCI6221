@@ -8,6 +8,7 @@ def movieSearch(movie_query):
 
     list = []
     # Search by movie
+    api_key = '03645002b465428658913956c71ee9e7'
     response = requests.get(f'https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={movie_query}')
 
     # Parse the JSON response
@@ -26,7 +27,7 @@ def movieSearch(movie_query):
         my_dict['Title'] = result['title']
         my_dict['Release Date'] = result['release_date']
         my_dict['Overview'] = result['overview']
-
+        list.append(my_dict)
         # print("----------")
     return list
 
@@ -97,5 +98,11 @@ def actorMovieSearch(actor_name,movie_title):
                 # print("----------")
         return list
 
-print("Movie and Actor Search")
-temp= actorMovieSearch("keanu","matrix")
+print(movieSearch("The Shawshank Redemption"))
+print(movieSearch("The Godfather"))
+print(movieSearch("Forrest Gump"))
+print(movieSearch("The Dark Knight"))
+print(movieSearch("Inception"))
+
+# print("Movie and Actor Search")
+# temp= actorMovieSearch("keanu","matrix")
