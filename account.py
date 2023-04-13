@@ -55,9 +55,9 @@ def login(username,password):
     if(passReturn==hashed_password):
         print("Username and Password Found")
         c.execute("SELECT id FROM users WHERE username = ?", (username,))
-        return c.fetchone()
+        return True, c.fetchone()
     else:
-        return False
+        return False, None
 
 def createNewLibrary(accNum):
     conn = sqlite3.connect('Databases/accountLibrary.db')

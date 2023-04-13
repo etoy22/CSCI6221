@@ -69,19 +69,19 @@ a:hover {
     </head>
     <body>
         <div class="form">
-            <form>
+            <form id="login-form">
                 <span style="color:yellowgreen">Existing User?</span>
                 <br>
                 <span>Username</span>
-                <input type="text" name="Username" placeholder="Enter your Username" required/>
+                <input type="text" name="Username" id="username" placeholder="Enter your Username" required/>
                 <i class='bx bxs-user'></i>
                 <br>
                 <span>Password</span>
-                <input type="password" name="password" placeholder="Enter your Password" required/>
+                <input type="password" name="password" id="password" placeholder="Enter your Password" required/>
                 <i class='bx bxs-lock-alt'></i>
                 <br>
                 <br>
-                <input class="log" type="submit" name="Login" value="Login">
+                <input class="log" type="submit" name="Login" id="loginButton" value="Login">
                 <br>
                 <label><a href="/">Main Menu</a></label>
                 <br>
@@ -89,4 +89,33 @@ a:hover {
             </form>
         </div>
     </body>
+    <script>
+      const loginForm = document.querySelector('#login-form');
+      const loginButton = document.querySelector('#loginButton');
+
+      loginButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const formData = new FormData(loginForm);
+          
+          fetch('/loginUser', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              const success = data.success;
+              if (success) {
+                  statusMessage.textContent = 'Login successful!';
+                  // redirect to the user's dashboard or home page
+              } else {
+                  statusMessage.textContent = 'Login failed. Username or password is wrong.';
+              }
+          })
+          .catch(error => {
+              console.error(error);
+              statusMessage.textContent = 'An error occurred. Please try again later.';
+          });
+      });
+
+    </script>
 </html>
