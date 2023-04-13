@@ -30,16 +30,14 @@ def signupWeb():
 
 @app.route('/loginUser', methods=['POST'])
 def loginWeb():
-    print("Got here")
     username = request.form.get('username')
     password = request.form.get('password')
 
     # Do something with the form data
     print(username, password)
-    temp = login(username, password)
-    if temp is not None:
-        print(temp)
-        return jsonify({'success': True, 'id': temp})
+    id = login(username, password)
+    if id is not None:
+        return jsonify({'success': True, 'id': id})
     else:
         print("Invalid username or password")
         return jsonify({'success': False})
