@@ -73,7 +73,7 @@ a:hover {
                 <span style="color:yellowgreen">Existing User?</span>
                 <br>
                 <span>Username</span>
-                <input type="text" name="Username" id="username" placeholder="Enter your Username" required/>
+                <input type="text" name="username" id="username" placeholder="Enter your Username" required/>
                 <i class='bx bxs-user'></i>
                 <br>
                 <span>Password</span>
@@ -105,10 +105,10 @@ a:hover {
           .then(data => {
               const success = data.success;
               if (success) {
-                  statusMessage.textContent = 'Login successful!';
+                window.alert('Login successful!');
                   // redirect to the user's dashboard or home page
               } else {
-                  statusMessage.textContent = 'Login failed. Username or password is wrong.';
+                window.alert('Login failed. Username or password is wrong.');
               }
           })
           .catch(error => {

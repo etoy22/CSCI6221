@@ -31,33 +31,30 @@ def addNewAccount(first_name,last_name,email,username,password):
 
     return passed
 
-def login(username,password):
-
+def login(username, password):
     conn = sqlite3.connect('Databases/passwords.db')
-
-    # Connect to the database
     c = conn.cursor()
-
     row = None
+    
     # Execute the query to retrieve the password for the given username
-    c.execute("SELECT hashed_password FROM users WHERE username = ?", (username,))
+    c.execute("SELECT hashed_password, id FROM users WHERE username = ?", (username,))
     row = c.fetchone()
-
+    
     # Return None if User does not exist
     if row is None:
         print("User not found")
+        conn.close()
         return None
     
-    passReturn = row[0]
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    
-    #Returns the id of the user if the username and password match, Returns false if username matches but password does
-    if(passReturn==hashed_password):
+    hashed_password, user_id = row
+    if hashed_password == hashlib.sha256(password.encode()).hexdigest():
         print("Username and Password Found")
-        c.execute("SELECT id FROM users WHERE username = ?", (username,))
-        return True, c.fetchone()
+        conn.close()
+        return user_id
     else:
-        return False, None
+        conn.close()
+        return None
+
 
 def createNewLibrary(accNum):
     conn = sqlite3.connect('Databases/accountLibrary.db')

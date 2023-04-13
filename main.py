@@ -35,10 +35,15 @@ def loginWeb():
     password = request.form.get('password')
 
     # Do something with the form data
-    print(username,password)
-    success, id = login(username,password)
-    
-    return jsonify({'success': success,'id':id})
+    print(username, password)
+    temp = login(username, password)
+    if temp is not None:
+        print(temp)
+        return jsonify({'success': True, 'id': temp})
+    else:
+        print("Invalid username or password")
+        return jsonify({'success': False})
+
 
 
 if __name__ == '__main__':
