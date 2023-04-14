@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Library</title>
+</head>
+<body>
+	<!-- Greeting message with the {{ user }} variable -->
+	<h1>Hello, {{ name }}!</h1>
+    <a href="search">
+        <input type="button" name="Search" id="Search" value="Add New Movies"/>
+    </a>
+    <input type="button" name="RemoveMovies" id="RemoveMovies" value="Remove Selected Movies" onclick="removeContent()"/>
+	<ul id="list"></ul>
+
+	<table>
+		<thead>
+		  <tr>
+			<th>Select</th>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Release Date</th>
+			<th>Overview</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for movie in movies %}
+			<tr>
+	          <td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td> <!-- Add a checkbox input element for each movie -->
+			  <td>{{ movie.ID }}</td>
+			  <td>{{ movie.Title }}</td>
+			  <td>{{ movie.Release_date }}</td>
+			  <td>{{ movie.Overview }}</td>
+			</tr>
+		  {% endfor %}
+		</tbody>
+	  </table>
+	  
+	<script>
+		// Function for removing content
+		function removeContent() {
+			// Code to remove content goes here
+		}
+		
+		
+	</script>
+</body>
+</html>

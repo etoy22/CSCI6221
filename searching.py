@@ -7,6 +7,21 @@ import os
 # Replace syour TMDb API key
 api_key = '03645002b465428658913956c71ee9e7'
 
+
+def get_movie_details(movie_id):
+    api_key = '03645002b465428658913956c71ee9e7'
+    response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}')
+    
+
+    movie = response.json()
+    over = movie['overview'][:100]+"..."
+    return {
+        'ID': movie['id'],
+        'Title': movie['title'],
+        'Release_date': movie['release_date'],
+            'Overview': over
+        }
+
 def movieSearch(movie_query):
 
     list = []
@@ -110,7 +125,7 @@ def imageSearch(img):
 # print(movieSearch("The Shawshank Redemption"))
 # print(movieSearch("The Godfather"))
 # print(movieSearch("Forrest Gump"))
-# print(movieSearch("The Dark Knight"))
+print(movieSearch("The Dark Knight"))
 # print(movieSearch("Inception"))
 
 # print("Movie and Actor Search")

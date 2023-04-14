@@ -1,6 +1,12 @@
-from flask import Flask, render_template,request, jsonify
-from account import addNewAccount, login
+from flask import Flask, render_template, request, jsonify, redirect, session
+from account import addNewAccount, login, getName,getMovies
+import searching
+import secrets
+import uuid
+
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(16)
+
 
 @app.route('/')
 def index():
@@ -9,6 +15,25 @@ def index():
 @app.route('/signup')
 def signup():
     return render_template('signUp.html')
+
+@app.route('/library')
+def library():
+    if 'sessionID' not in session:
+        return redirect('/login')
+    user_id = session.get('user_id')
+    name = getName(user_id)
+    movies = getMovies(user_id)
+    mdetails = []
+    for movie in movies:
+        mdetails.append(searching.get_movie_details(movie))
+    print(mdetails)
+    return render_template('library.html',name=name,movies=mdetails)
+
+@app.route('/search')
+def search():
+    if 'sessionID' not in session:
+        return redirect('/login')
+    return render_template('search.html')
 
 @app.route('/login')
 def loginAccount():
@@ -28,19 +53,27 @@ def signupWeb():
     success = addNewAccount(first_name,last_name,email,username,password)
     return jsonify({'success': success})
 
+
 @app.route('/loginUser', methods=['POST'])
 def loginWeb():
-    username = request.form.get('username')
-    password = request.form.get('password')
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    # Do something with the form data
-    print(username, password)
-    id = login(username, password)
-    if id is not None:
-        return jsonify({'success': True, 'id': id})
+        # Do something with the form data
+        id = login(username, password)
+        if id is not None:
+
+            session['sessionID'] = uuid.uuid4().hex
+            session['user_id'] = id
+            return jsonify({'success': True})
+            # return redirect('/library')
+        else:
+            print("Invalid username or password")
+            return jsonify({'success': False})
     else:
-        print("Invalid username or password")
-        return jsonify({'success': False})
+        return redirect("/library")
+    
 
 
 

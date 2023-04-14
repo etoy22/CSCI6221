@@ -69,7 +69,7 @@ a:hover {
     </head>
     <body>
         <div class="form">
-            <form id="login-form">
+            <form id="login-form" >
                 <span style="color:yellowgreen">Existing User?</span>
                 <br>
                 <span>Username</span>
@@ -96,7 +96,6 @@ a:hover {
       loginButton.addEventListener('click', function(event) {
           event.preventDefault();
           const formData = new FormData(loginForm);
-          
           fetch('/loginUser', {
               method: 'POST',
               body: formData
@@ -104,18 +103,16 @@ a:hover {
           .then(response => response.json())
           .then(data => {
               const success = data.success;
-              if (success) {
-                window.alert('Login successful!');
-                  // redirect to the user's dashboard or home page
-              } else {
+              if (!success) {
                 window.alert('Login failed. Username or password is wrong.');
+              }else{
+                window.location.href = "/library"
               }
           })
           .catch(error => {
               console.error(error);
-              statusMessage.textContent = 'An error occurred. Please try again later.';
           });
       });
-
+      
     </script>
 </html>
