@@ -31,13 +31,13 @@ def movieSearch(movie_query):
 
     # Parse the JSON response
     search_results = json.loads(response.text)
-
     for result in search_results['results']:
+        over = result['overview'][:100]+"..."
         my_dict = {}
         my_dict['ID'] = result['id']
         my_dict['Title'] = result['title']
         my_dict['Release Date'] = result['release_date']
-        my_dict['Overview'] = result['overview']
+        my_dict['Overview'] = over
         list.append(my_dict)
         # print("----------")
     return list
@@ -59,6 +59,7 @@ def actorSearch(actor_name):
 
 
         for result in discover_results['results']:
+            over = result['overview'][:100]+"..."
             my_dict = {}
             my_dict['ID'] = result['id']
             my_dict['Title'] = result['title']
@@ -66,7 +67,7 @@ def actorSearch(actor_name):
                 my_dict['Release Date'] = result['release_date']
             except:
                 pass
-            my_dict['Overview'] = result['overview']
+            my_dict['Overview'] = over
             list.append(my_dict)
     return list
 
@@ -87,6 +88,7 @@ def actorMovieSearch(actor_name,movie_title):
         # Filter the movie results by searching for the movie title
         for result in discover_results['results']:
             if movie_title.lower() in result['title'].lower():
+                over = result['overview'][:100]+"..."
                 my_dict = {}
                 my_dict['ID'] = result['id']
                 my_dict['Title'] = result['title']
@@ -94,7 +96,7 @@ def actorMovieSearch(actor_name,movie_title):
                     my_dict['Release Date'] = result['release_date']
                 except:
                     my_dict['Release Date'] = "N/A"
-                my_dict['Overview'] = result['overview']
+                my_dict['Overview'] = over
                 list.append(my_dict)
         return list
 
@@ -125,7 +127,7 @@ def imageSearch(img):
 # print(movieSearch("The Shawshank Redemption"))
 # print(movieSearch("The Godfather"))
 # print(movieSearch("Forrest Gump"))
-print(movieSearch("The Dark Knight"))
+# print(movieSearch("The Dark Knight"))
 # print(movieSearch("Inception"))
 
 # print("Movie and Actor Search")
