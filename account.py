@@ -19,7 +19,6 @@ def addNewAccount(first_name,last_name,email,username,password):
         conn.commit()
         c.execute("SELECT id FROM users WHERE username = ?", (username,))
         id = c.fetchone()
-        print(id[0])
         conn.close()
         createNewLibrary(id[0])
 
@@ -88,14 +87,14 @@ def getMovies(accNum):
         movie_list_str = row[0]
         movie_list = eval(movie_list_str)
         movie_lists.append(movie_list)
-
     conn.close()
-    print(movie_list)
     return movie_list
 
-def addMovies(accNum,movieID):
+def addMovies(accNum,movieIDs):
     movie_list = getMovies(accNum)
-    movie_list.append(movieID)
+    for id in movieIDs:
+        if id not in movie_list:
+            movie_list.append(id)
     movie_list_str = str(movie_list)
 
     conn = sqlite3.connect('Databases/data.db')
@@ -105,7 +104,19 @@ def addMovies(accNum,movieID):
     conn.close()
 
 
+def removeMovies(accNum,movieIDs):
+    movie_list = []
+    movie_list.extend(getMovies(accNum))
+    for id in movieIDs:
+        movie_list.remove(int(id))
 
+    movie_list_str = str(movie_list)
+
+    conn = sqlite3.connect('Databases/data.db')
+    c = conn.cursor()
+    c.execute("UPDATE accounts SET movie_list = ? WHERE accNum = ?", (movie_list_str,accNum))
+    conn.commit()
+    conn.close()
 
 
 # print("admin passowrd")

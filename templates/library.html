@@ -25,7 +25,7 @@ ith the {{ user }} variable -->
 		<tbody>
 		  {% for movie in movies %}
 			<tr>
-	          <td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td> <!-- Add a checkbox input element for each movie -->
+	          <td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td>
 			  <td>{{ movie.ID }}</td>
 			  <td>{{ movie.Title }}</td>
 			  <td>{{ movie.Release_date }}</td>
@@ -38,8 +38,37 @@ ith the {{ user }} variable -->
 	<script>
 		// Function for removing content
 		function removeContent() {
-			// Code to remove content goes here
+			const selectedMovies = [];
+			const checkboxes = document.getElementsByName('selected_movies[]');
+			
+			for (let i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked) {
+					selectedMovies.push(checkboxes[i].value);
+				}
+			}
+			
+			console.log(selectedMovies);
+			// Make a HTTP POST request to the server
+			fetch('/remove_movies', {
+				method: 'POST',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({selectedMovies: selectedMovies})
+			})
+			.then(response => response.json())
+			.then(data => {
+				const success = data.success;
+				console.log("Success:",success)
+				if (!success) {
+				window.alert('Removed Nothing');
+				} else {
+				window.location.href = "/library"
+				}
+			})
+			.catch(error => console.error(error));
 		}
+
 		
 		
 	</script>

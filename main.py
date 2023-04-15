@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, session
-from account import addNewAccount, login, getName,getMovies
+import account as acc
 import searching
 import secrets
 import uuid
@@ -21,12 +21,11 @@ def library():
     if 'sessionID' not in session:
         return redirect('/login')
     user_id = session.get('user_id')
-    name = getName(user_id)
-    movies = getMovies(user_id)
+    name = acc.getName(user_id)
+    movies = acc.getMovies(user_id)
     mdetails = []
     for movie in movies:
         mdetails.append(searching.get_movie_details(movie))
-    print(mdetails)
     return render_template('library.html',name=name,movies=mdetails)
 
 @app.route('/search')
@@ -49,8 +48,7 @@ def signupWeb():
     confirmedpassword = request.form.get('ConfirmPassword')
 
     # Do something with the form data
-    print(first_name,last_name,email,username,password,confirmedpassword)
-    success = addNewAccount(first_name,last_name,email,username,password)
+    success = acc.addNewAccount(first_name,last_name,email,username,password)
     return jsonify({'success': success})
 
 
@@ -61,7 +59,7 @@ def loginWeb():
         password = request.form.get('password')
 
         # Do something with the form data
-        id = login(username, password)
+        id = acc.login(username, password)
         if id is not None:
 
             session['sessionID'] = uuid.uuid4().hex
@@ -74,6 +72,19 @@ def loginWeb():
     else:
         return redirect("/library")
     
+
+@app.route('/remove_movies', methods=['POST'])
+def remove_movies():
+    data = request.get_json()
+    selected_movies = data['selectedMovies']
+    if len(selected_movies) == 0:
+        return jsonify({'success': False})
+    
+    user_id = session.get('user_id')
+
+    acc.removeMovies(user_id,selected_movies)
+    print("DONE")
+    return jsonify({'success': True})
 
 
 
