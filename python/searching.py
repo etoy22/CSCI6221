@@ -11,6 +11,8 @@ api_key = '03645002b465428658913956c71ee9e7'
 get_movie_details
 Given a movies id recieve details about the movie
 '''
+
+
 def get_movie_details(movie_id):
     api_key = '03645002b465428658913956c71ee9e7'
     response = requests.get(
@@ -25,10 +27,13 @@ def get_movie_details(movie_id):
         'Overview': over
     }
 
+
 '''
 movieSearch()
 Given a Title search for a movie
 '''
+
+
 def movieSearch(movie_query):
 
     list = []
@@ -52,10 +57,13 @@ def movieSearch(movie_query):
         list.append(my_dict)
     return list
 
+
 '''
 actorSearch()
 Given a Actor search for a movie
 '''
+
+
 def actorSearch(actor_name):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
@@ -86,10 +94,13 @@ def actorSearch(actor_name):
             list.append(my_dict)
     return list
 
+
 '''
 actorMovieSearch()
 Given an Actor and a Movie Title search for a movie
 '''
+
+
 def actorMovieSearch(actor_name, movie_title):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
@@ -130,8 +141,11 @@ def actorMovieSearch(actor_name, movie_title):
 imageSearch()
 Given an image search for a movie
 '''
+
+
 def imageSearch(img):
-    path_to_tesseract = r"Tesseract-OCR\tesseract.exe" #Download at https://github.com/tesseract-ocr/tesseract
+    # Download at https://github.com/tesseract-ocr/tesseract
+    path_to_tesseract = r"Tesseract-OCR\tesseract.exe"
     pytesseract.tesseract_cmd = path_to_tesseract
 
     # Open image and then try to convert the image to text
@@ -151,4 +165,3 @@ def imageSearch(img):
             value.extend(hold)
 
     return value
-

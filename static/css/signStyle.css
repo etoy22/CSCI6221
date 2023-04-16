@@ -1,85 +1,85 @@
 body {
-    font-family: bradley hand, cursive;
-    background-image: url("https://static.vecteezy.com/system/resources/previews/003/497/193/original/internet-cyber-security-connection-concept-background-free-vector.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-  }
+  font-family: bradley hand, cursive;
+  background-image: url("https://static.vecteezy.com/system/resources/previews/003/497/193/original/internet-cyber-security-connection-concept-background-free-vector.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
 
-  span {
-    color: #ffffff;
-  }
+span {
+  color: #ffffff;
+}
 
-  .page {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  input {
-    height: 50px;
-    width: 75%;
-    border-radius: 25px;
-    border: none;
-    border-color: #ffffff;
-    padding: 0 0 0 40px;
-    background: rgba(255, 255, 255, 0.1)
-  }
+input {
+  height: 50px;
+  width: 75%;
+  border-radius: 25px;
+  border: none;
+  border-color: #ffffff;
+  padding: 0 0 0 40px;
+  background: rgba(255, 255, 255, 0.1)
+}
 
-  .c1,
-  .c2,
-  .c3,
-  .c4,
-  .c5,
-  .c6 {
-    display: inline-block;
-    width: 48%;
-    vertical-align: top;
-  }
+.c1,
+.c2,
+.c3,
+.c4,
+.c5,
+.c6 {
+  display: inline-block;
+  width: 48%;
+  vertical-align: top;
+}
 
-  .log {
-    width: 317px;
-    cursor: pointer;
-    font-size: 15px;
-    color: beige;
-    text-align: center left;
-    display: block;
-    margin: auto;
-    padding: 0px;
-  }
+.log {
+  width: 317px;
+  cursor: pointer;
+  font-size: 15px;
+  color: beige;
+  text-align: center left;
+  display: block;
+  margin: auto;
+  padding: 0px;
+}
 
-  .cn {
-    text-align: left;
-    display: block;
-    margin: auto;
-    padding: 0px;
-    font-size: 34px;
-  }
+.cn {
+  text-align: left;
+  display: block;
+  margin: auto;
+  padding: 0px;
+  font-size: 34px;
+}
 
-  ::-webkit-input-placeholder {
-    color: beige;
-  }
+::-webkit-input-placeholder {
+  color: beige;
+}
 
-  i {
-    position: relative;
-    left: -317px;
-    color: yellow;
-  }
+i {
+  position: relative;
+  left: -317px;
+  color: yellow;
+}
 
-  a:link {
-    color: yellowgreen;
-    background-color: transparent;
-  }
+a:link {
+  color: yellowgreen;
+  background-color: transparent;
+}
 
-  a:visited {
-    color: yellowgreen;
-    background-color: transparent;
-  }
+a:visited {
+  color: yellowgreen;
+  background-color: transparent;
+}
 
-  a:hover {
-    color: yellow;
-    background-color: transparent;
-    text-decoration: underline;
-  }
+a:hover {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
