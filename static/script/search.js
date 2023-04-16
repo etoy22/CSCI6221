@@ -19,7 +19,6 @@ function search() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if (data.success) {
                 const moviesTableBody = document.querySelector('#movies-table tbody');
                 moviesTableBody.innerHTML = '';
@@ -41,14 +40,50 @@ function search() {
         .catch(error => console.error(error));
 }
 /* 
-search()
-Takes the an image from the user and sends that to the server
-this ends up resulting in the displaying the text from the image as search results
+search_Image()
+A button when clicked reveals the ability to upload an image
  */
 function search_Image() {
+    document.getElementById('image-upload').style.display = 'block';
 
 }
 
+/* 
+sendingImage()
+Takes the an image from the user and sends that to the server
+this ends up resulting in the displaying the text from the image as search results
+ */
+function sendingImage() {
+    let fileInput = document.getElementById('image-upload');
+    let formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+
+    fetch('/search_movies_image', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const moviesTableBody = document.querySelector('#movies-table tbody');
+                moviesTableBody.innerHTML = '';
+                data.movies.forEach(movie => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+            <td><input type="checkbox" name="selected_movies[]" value="${movie.ID}"></td>
+            <td>${movie.ID}</td>
+            <td>${movie.Title}</td>
+            <td>${movie.Release_Date}</td>
+            <td>${movie.Overview}</td>
+        `;
+                    moviesTableBody.appendChild(tr);
+                });
+            } else {
+                console.log('No search results found');
+            }
+        })
+        .catch(error => console.error(error));
+}
 
 /* 
 addToLibrary()
@@ -74,7 +109,6 @@ function addToLibrary() {
         .then(response => response.json())
         .then(data => {
             const success = data.success;
-            console.log("Success:", success)
             if (!success) {
                 window.alert('Nothing was selected');
             } else {

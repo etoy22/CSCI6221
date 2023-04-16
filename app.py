@@ -171,7 +171,17 @@ def addMovies():
 def searchMoviesImage():
     if 'sessionID' not in session:
         return redirect('/login')
-    print('temp')
+    
+    if 'image' not in request.files:
+        return jsonify({'success': False, 'message': 'No image file found'})
+    
+    file = request.files['image']
+    print(file)
+    mdetails = ser.imageSearch(file)
+    print("_________________")
+    print(mdetails)
+    # Process the image file here
+    return jsonify({'success': True, 'movies': mdetails})
 
 
 if __name__ == '__main__':

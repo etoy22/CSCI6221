@@ -17,6 +17,7 @@
 		<input class="log" type="button" value="Search by Image" onclick="search_Image()">
 		<input class="log" type="button" value="Add to Library" onclick="addToLibrary()">
 		<input class="log button" type="button" value="Back" onclick="window.location.href='/library'" />
+		<input id="image-upload" type="file" name="image" style="display: none;" onchange="sendingImage()">
 	</form>
 	<table id="movies-table">
 		<thead class="t1">
