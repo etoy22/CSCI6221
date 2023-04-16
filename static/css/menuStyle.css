@@ -1,0 +1,46 @@
+body {
+    font-family: bradley hand, cursive;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/006/852/804/original/abstract-blue-background-simple-design-for-your-website-free-vector.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.l1,
+.l2 {
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+}
+
+input {
+    width: 100px;
+    height: 80px;
+    border: none;
+    background-color: yellowgreen;
+    border-radius: 30%;
+    box-shadow: inset 0 0 0 0 chocolate;
+    font-size: 1.5em;
+    margin-left: 30px;
+    outline: none;
+}
+
+.cn {
+    text-align: center;
+    display: block;
+    margin: auto;
+    padding: 0px;
+    font-size: 34px;
+}
+
+input:hover {
+    box-shadow: inset 100px 0 0 0 chocolate;
+}

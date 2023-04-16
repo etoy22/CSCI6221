@@ -1,0 +1,69 @@
+body {
+    font-family: bradley hand, cursive;
+    background-image: url('https://playboxtechnology.com/wp-content/uploads/2021/11/PlayBox-OTT-CMS-Header-scaled.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+span {
+    color: white;
+}
+
+i {
+    position: relative;
+    left: -317px;
+    color: yellow;
+}
+
+::-webkit-input-placeholder {
+    color: beige;
+}
+
+.log {
+    width: 325px;
+    cursor: pointer;
+    font-size: 15px;
+    color: beige;
+    padding: 0px;
+}
+
+.log1 {
+    position: relative;
+    left: 230px;
+    top: -22px
+}
+
+input {
+    height: 50px;
+    width: 75%;
+    border-radius: 40px;
+    border-color: yellowgreen;
+    padding: 0 0 0 40px;
+    background: rgba(255, 255, 255, 0.1)
+}
+
+.form {
+    width: 380px;
+    height: 480px;
+    margin: 20% 5% 15% 30%;
+    background: rgba(255, 255, 255, .0);
+    position: relative;
+}
+
+a:link {
+    color: #D2691E;
+    background-color: transparent;
+}
+
+a:visited {
+    color: orange;
+    background-color: transparent;
+}
+
+a:hover {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
