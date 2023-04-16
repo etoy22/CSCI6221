@@ -31,11 +31,14 @@ def library():
     return render_template('library.html', name=name, movies=mdetails)
 
 
-@app.route('/search')
+@app.route('/search',methods=['GET','POST'])
 def search():
     if 'sessionID' not in session:
         return redirect('/login')
+
     mdetails = []
+    if request.method == 'POST':
+        print()
     return render_template('search.html', movies=mdetails)
 
 
@@ -51,9 +54,6 @@ def signupWeb():
     email = request.form.get('email')
     username = request.form.get('username')
     password = request.form.get('password')
-    confirmedpassword = request.form.get('ConfirmPassword')
-
-    # Do something with the form data
     success = acc.addNewAccount(
         first_name, last_name, email, username, password)
     return jsonify({'success': success})

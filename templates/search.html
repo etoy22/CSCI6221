@@ -59,7 +59,7 @@
 		<input type="text" id="aName" name="aName"><br><br>
 		<input class="log" type="submit" value="Search" onclick="search()">
 		<input class="log" type="submit" value="Add to Library" onclick="addToLibrary()">
-		<input class="log" type="submit" value="Back" onclick="" window.location.href='/library'"">
+		<input class="log button" type="button" value="Back" onclick="window.location.href='/library'" />
 	</form>
 	<table>
 		<thead class="t1">
@@ -84,8 +84,7 @@
 		</tbody>
 	</table>
 </body>
-<script>
+<script src="{{ url_for('static', filename='Javascript/search.js') }}"></script>
 
-</script>
 
 </html>

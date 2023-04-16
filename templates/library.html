@@ -44,8 +44,6 @@
 </head>
 
 <body>
-	<!-- Greeting message w	<h1>Hello, {{ name }}!</h1>
-ith the {{ user }} variable -->
 	<div class="page">
 		<a href="search">
 			<input class="c1" type="button" name="Search" id="Search" value="Add New Movies" />
@@ -68,7 +66,6 @@ ith the {{ user }} variable -->
 			{% for movie in movies %}
 			<tr>
 				<td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td>
-				<!-- Add a checkbox input element for each movie -->
 				<td>{{ movie.ID }}</td>
 				<td>{{ movie.Title }}</td>
 				<td>{{ movie.Release_date }}</td>
@@ -78,41 +75,7 @@ ith the {{ user }} variable -->
 		</tbody>
 	</table>
 
-	<script>
-		// Function for removing content
-		function removeContent() {
-			const selectedMovies = [];
-			const checkboxes = document.getElementsByName('selected_movies[]');
-
-			for (let i = 0; i < checkboxes.length; i++) {
-				if (checkboxes[i].checked) {
-					selectedMovies.push(checkboxes[i].value);
-				}
-			}
-
-			console.log(selectedMovies);
-			// Make a HTTP POST request to the server
-			fetch('/remove_movies', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ selectedMovies: selectedMovies })
-			})
-				.then(response => response.json())
-				.then(data => {
-					const success = data.success;
-					console.log("Success:", success)
-					if (!success) {
-						window.alert('Removed Nothing');
-					} else {
-						window.location.href = "/library"
-					}
-				})
-				.catch(error => console.error(error));
-		}
-
-	</script>
+	<script src="{{ url_for('static', filename='Javascript/library.js') }}"></script>
 </body>
 
 </html>
