@@ -18,7 +18,7 @@ def get_movie_details(movie_id):
     return {
         'ID': movie['id'],
         'Title': movie['title'],
-        'Release_date': movie['release_date'],
+        'Release_Date': movie['release_date'],
         'Overview': over
     }
 
@@ -34,11 +34,14 @@ def movieSearch(movie_query):
     # Parse the JSON response
     search_results = json.loads(response.text)
     for result in search_results['results']:
-        over = result['overview'][:100]+"..."
+        if len(result['overview']) > 100:
+            over = result['overview'][:100]+"..."
+        else:
+            over = result['overview']
         my_dict = {}
         my_dict['ID'] = result['id']
         my_dict['Title'] = result['title']
-        my_dict['Release Date'] = result['release_date']
+        my_dict['Release_Date'] = result['release_date']
         my_dict['Overview'] = over
         list.append(my_dict)
         # print("----------")
@@ -63,12 +66,15 @@ def actorSearch(actor_name):
         print(discover_results['results'])
 
         for result in discover_results['results']:
-            over = result['overview'][:100]+"..."
+            if len(result['overview']) > 100:
+                over = result['overview'][:100]+"..."
+            else:
+                over = result['overview']
             my_dict = {}
             my_dict['ID'] = result['id']
             my_dict['Title'] = result['title']
             try:
-                my_dict['Release Date'] = result['release_date']
+                my_dict['Release_Date'] = result['release_date']
             except:
                 pass
             my_dict['Overview'] = over
@@ -95,14 +101,18 @@ def actorMovieSearch(actor_name, movie_title):
         # Filter the movie results by searching for the movie title
         for result in discover_results['results']:
             if movie_title.lower() in result['title'].lower():
-                over = result['overview'][:100]+"..."
+                if len(result['overview']) > 100:
+                    over = result['overview'][:100]+"..."
+                else:
+                    over = result['overview']
+
                 my_dict = {}
                 my_dict['ID'] = result['id']
                 my_dict['Title'] = result['title']
                 try:
-                    my_dict['Release Date'] = result['release_date']
+                    my_dict['Release_Date'] = result['release_date']
                 except:
-                    my_dict['Release Date'] = "N/A"
+                    my_dict['Release_Date'] = "N/A"
                 my_dict['Overview'] = over
                 list.append(my_dict)
         return list

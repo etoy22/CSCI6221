@@ -52,16 +52,17 @@
 </head>
 
 <body>
-	<form class="page">
+	<form>
 		<label for="mName">Search Movie Name:</label>
 		<input type="text" id="mName" name="mName"><br><br>
 		<label for="aName">Search by Actor Name:</label>
 		<input type="text" id="aName" name="aName"><br><br>
-		<input class="log" type="submit" value="Search" onclick="search()">
-		<input class="log" type="submit" value="Add to Library" onclick="addToLibrary()">
+		<input class="log" type="button" value="Search" onclick="search()">
+		<input class="log" type="button" value="Search by Image" onclick="search_Image()">
+		<input class="log" type="button" value="Add to Library" onclick="addToLibrary()">
 		<input class="log button" type="button" value="Back" onclick="window.location.href='/library'" />
 	</form>
-	<table>
+	<table id = "movies-table">
 		<thead class="t1">
 			<tr>
 				<th>Select</th>
@@ -77,7 +78,7 @@
 				<td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td>
 				<td>{{ movie.ID }}</td>
 				<td>{{ movie.Title }}</td>
-				<td>{{ movie.Release_date }}</td>
+				<td>{{ movie.Release_Date }}</td>
 				<td>{{ movie.Overview }}</td>
 			</tr>
 			{% endfor %}
@@ -85,8 +86,46 @@
 	</table>
 </body>
 <script>
-
 	function search() {
+		console.log("Button Pressed")
+		const movieName = document.getElementById('mName').value;
+		const actorName = document.getElementById('aName').value;
+
+		fetch('/searchMovies', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				movieName: movieName,
+				actorName: actorName
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				if (data.success) {
+					const moviesTableBody = document.querySelector('#movies-table tbody');
+					moviesTableBody.innerHTML = '';
+					data.movies.forEach(movie => {
+						const tr = document.createElement('tr');
+						tr.innerHTML = `
+                    <td><input type="checkbox" name="selected_movies[]" value="${movie.ID}"></td>
+                    <td>${movie.ID}</td>
+                    <td>${movie.Title}</td>
+                    <td>${movie.Release_Date}</td>
+                    <td>${movie.Overview}</td>
+                `;
+						moviesTableBody.appendChild(tr);
+					});
+				} else {
+					console.log('No search results found');
+				}
+			})
+			.catch(error => console.error(error));
+	}
+
+	function search_Image() {
 
 	}
 
