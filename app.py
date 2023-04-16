@@ -55,7 +55,6 @@ Functions for the Login page
 First is route       | Function            | Purpose 
 /login               | loginAccount()      | Serves as the Login page
 /loginUser           | loginWeb()          | Serves to check if the account actually exists and if it does login to the account
-
 '''
 
 
@@ -77,7 +76,6 @@ def loginWeb():
         return jsonify({'success': True})
     else:
         # Gets here if the account doesn't exist
-        print("Invalid username or password")
         return jsonify({'success': False})
 
 
@@ -151,7 +149,6 @@ def searchMovies():
         mdetails = ser.movieSearch(movieSearch)
     else:
         mdetails = ser.actorMovieSearch(actorSearch, movieSearch)
-    print(mdetails)
     return jsonify({'success': True, 'movies': mdetails})
 
 

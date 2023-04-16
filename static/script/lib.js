@@ -1,3 +1,9 @@
+/* 
+addToLibrary()
+Takes the checkboxed values and gets the id's of those movies.
+Sends those IDs to the server which removes them to the users library
+ */
+
 function removeContent() {
     const selectedMovies = [];
     const checkboxes = document.getElementsByName('selected_movies[]');

@@ -1,7 +1,10 @@
 import hashlib
 import sqlite3
 
-
+'''
+addNewAccount()
+Creates a new account with the details given
+'''
 def addNewAccount(first_name, last_name, email, username, password):
     # Varriable to determine if a unique username went through
     passed = True
@@ -24,13 +27,29 @@ def addNewAccount(first_name, last_name, email, username, password):
         createNewLibrary(id[0])
 
     except sqlite3.IntegrityError:
-        print("Error: Duplicate value for unique column")
         passed = False
         conn.close()
 
     return passed
 
+'''
+createNewLibrary()
+Creates a new library when one creates a new account
+'''
+def createNewLibrary(accNum):
+    conn = sqlite3.connect('Databases/data.db')
+    c = conn.cursor()
+    movie_list = []
+    c.execute("INSERT INTO accounts (accNum, movie_list) VALUES (?, ?)",
+              (accNum, str(movie_list)))
+    conn.commit()
+    conn.close()
 
+
+'''
+login()
+Allows the user to login
+'''
 def login(username, password):
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
@@ -43,29 +62,21 @@ def login(username, password):
 
     # Return None if User does not exist
     if row is None:
-        print("User not found")
         conn.close()
         return None
 
     hashed_password, user_id = row
     if hashed_password == hashlib.sha256(password.encode()).hexdigest():
-        print("Username and Password Found")
         conn.close()
         return user_id
     else:
         conn.close()
         return None
 
-
-def createNewLibrary(accNum):
-    conn = sqlite3.connect('Databases/data.db')
-    c = conn.cursor()
-    movie_list = []
-    c.execute("INSERT INTO accounts (accNum, movie_list) VALUES (?, ?)",
-              (accNum, str(movie_list)))
-    conn.commit()
-    conn.close()
-
+'''
+getName()
+Given a users_id get the name of the individual
+'''
 
 def getName(id):
     conn = sqlite3.connect('Databases/data.db')
@@ -77,7 +88,10 @@ def getName(id):
     conn.close()
     return result[0][0]
 
-
+'''
+getMovies()
+Given a users_id get the library that the users have seen
+'''
 def getMovies(accNum):
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
@@ -95,7 +109,10 @@ def getMovies(accNum):
     conn.close()
     return movie_list
 
-
+'''
+addMovies()
+Given a users_id and the movie_id add the movies to the users library
+'''
 def addMovies(accNum, movieIDs):
     movie_list = []
     movie_list.extend(getMovies(accNum))
@@ -112,7 +129,10 @@ def addMovies(accNum, movieIDs):
     conn.commit()
     conn.close()
 
-
+'''
+removeMovies()
+Given a users_id and the movie_id remove the movies from the users library
+'''
 def removeMovies(accNum, movieIDs):
     movie_list = []
     movie_list.extend(getMovies(accNum))
@@ -127,11 +147,3 @@ def removeMovies(accNum, movieIDs):
               (movie_list_str, accNum))
     conn.commit()
     conn.close()
-
-
-# print("admin passowrd")
-# login("admin","password")
-# print("---------\nadmin pass")
-# login("admin","pass")
-# print("---------\nad pass")
-# login("ad","password")

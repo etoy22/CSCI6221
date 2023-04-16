@@ -1,3 +1,8 @@
+/* 
+search()
+Takes the actor name and the movie name from the html and sends that result to the server
+this ends up resulting in the displaying of the search values
+ */
 function search() {
     const movieName = document.getElementById('mName').value;
     const actorName = document.getElementById('aName').value;
@@ -35,11 +40,21 @@ function search() {
         })
         .catch(error => console.error(error));
 }
-
+/* 
+search()
+Takes the an image from the user and sends that to the server
+this ends up resulting in the displaying the text from the image as search results
+ */
 function search_Image() {
 
 }
 
+
+/* 
+addToLibrary()
+Takes the checkboxed values and gets the id's of those movies.
+Sends those IDs to the server which adds them to the users library
+ */
 function addToLibrary() {
     const selectedMovies = [];
     const checkboxes = document.getElementsByName('selected_movies[]');

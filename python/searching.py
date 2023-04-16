@@ -4,10 +4,13 @@ import requests
 import json
 import os
 
-# Replace syour TMDb API key
+'''API key'''
 api_key = '03645002b465428658913956c71ee9e7'
 
-
+'''
+get_movie_details
+Given a movies id recieve details about the movie
+'''
 def get_movie_details(movie_id):
     api_key = '03645002b465428658913956c71ee9e7'
     response = requests.get(
@@ -22,7 +25,10 @@ def get_movie_details(movie_id):
         'Overview': over
     }
 
-
+'''
+movieSearch()
+Given a Title search for a movie
+'''
 def movieSearch(movie_query):
 
     list = []
@@ -44,10 +50,12 @@ def movieSearch(movie_query):
         my_dict['Release_Date'] = result['release_date']
         my_dict['Overview'] = over
         list.append(my_dict)
-        # print("----------")
     return list
 
-
+'''
+actorSearch()
+Given a Actor search for a movie
+'''
 def actorSearch(actor_name):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
@@ -61,9 +69,6 @@ def actorSearch(actor_name):
         response = requests.get(
             f'https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_cast={actor_id}')
         discover_results = json.loads(response.text)
-
-        # print("Example to analysis")
-        print(discover_results['results'])
 
         for result in discover_results['results']:
             if len(result['overview']) > 100:
@@ -81,7 +86,10 @@ def actorSearch(actor_name):
             list.append(my_dict)
     return list
 
-
+'''
+actorMovieSearch()
+Given an Actor and a Movie Title search for a movie
+'''
 def actorMovieSearch(actor_name, movie_title):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
@@ -118,12 +126,16 @@ def actorMovieSearch(actor_name, movie_title):
         return list
 
 
+'''
+imageSearch()
+Given an image search for a movie
+'''
 def imageSearch(img):
-    path_to_tesseract = r"Tesseract-OCR\tesseract.exe"
+    path_to_tesseract = r"Tesseract-OCR\tesseract.exe" #Download at https://github.com/tesseract-ocr/tesseract
     pytesseract.tesseract_cmd = path_to_tesseract
 
     # Open image and then try to convert the image to text
-    screen = Image.open("screenshot.png")
+    screen = Image.open(img)
     text = pytesseract.image_to_string(screen)
 
     lines = text.splitlines()
@@ -140,11 +152,3 @@ def imageSearch(img):
 
     return value
 
-# print(movieSearch("The Shawshank Redemption"))
-# print(movieSearch("The Godfather"))
-# print(movieSearch("Forrest Gump"))
-# print(movieSearch("The Dark Knight"))
-# print(movieSearch("Inception"))
-
-# print("Movie and Actor Search")
-# temp= actorMovieSearch("keanu","matrix")

@@ -1,5 +1,10 @@
+/* 
+login()
+Takes the username and password sends it to the server to check if they are correct
+If correct sends the user to their library
+ */
+
 function login() {
-    console.log("test")
 
     const loginForm = document.querySelector('#login-form');
     const loginButton = document.querySelector('#loginButton');
