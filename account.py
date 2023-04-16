@@ -2,11 +2,11 @@ import hashlib
 import sqlite3
 
 
-def addNewAccount(first_name,last_name,email,username,password):
-    #Varriable to determine if a unique username went through
+def addNewAccount(first_name, last_name, email, username, password):
+    # Varriable to determine if a unique username went through
     passed = True
 
-    #Connect to the database
+    # Connect to the database
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
 
@@ -15,13 +15,13 @@ def addNewAccount(first_name,last_name,email,username,password):
 
     # Attempt to login
     try:
-        c.execute('INSERT INTO users (fname, lname, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)', (first_name,last_name,email,username, hashed_password))
+        c.execute('INSERT INTO users (fname, lname, email, username, hashed_password) VALUES (?, ?, ?, ?, ?)',
+                  (first_name, last_name, email, username, hashed_password))
         conn.commit()
         c.execute("SELECT id FROM users WHERE username = ?", (username,))
         id = c.fetchone()
         conn.close()
         createNewLibrary(id[0])
-
 
     except sqlite3.IntegrityError:
         print("Error: Duplicate value for unique column")
@@ -30,21 +30,23 @@ def addNewAccount(first_name,last_name,email,username,password):
 
     return passed
 
+
 def login(username, password):
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
     row = None
-    
+
     # Execute the query to retrieve the password for the given username
-    c.execute("SELECT hashed_password, id FROM users WHERE username = ?", (username,))
+    c.execute(
+        "SELECT hashed_password, id FROM users WHERE username = ?", (username,))
     row = c.fetchone()
-    
+
     # Return None if User does not exist
     if row is None:
         print("User not found")
         conn.close()
         return None
-    
+
     hashed_password, user_id = row
     if hashed_password == hashlib.sha256(password.encode()).hexdigest():
         print("Username and Password Found")
@@ -58,10 +60,12 @@ def login(username, password):
 def createNewLibrary(accNum):
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
-    movie_list=[]
-    c.execute("INSERT INTO accounts (accNum, movie_list) VALUES (?, ?)", (accNum, str(movie_list)))
+    movie_list = []
+    c.execute("INSERT INTO accounts (accNum, movie_list) VALUES (?, ?)",
+              (accNum, str(movie_list)))
     conn.commit()
     conn.close()
+
 
 def getName(id):
     conn = sqlite3.connect('Databases/data.db')
@@ -72,6 +76,7 @@ def getName(id):
 
     conn.close()
     return result[0][0]
+
 
 def getMovies(accNum):
     conn = sqlite3.connect('Databases/data.db')
@@ -90,21 +95,25 @@ def getMovies(accNum):
     conn.close()
     return movie_list
 
-def addMovies(accNum,movieIDs):
-    movie_list = getMovies(accNum)
+
+def addMovies(accNum, movieIDs):
+    movie_list = []
+    movie_list.extend(getMovies(accNum))
     for id in movieIDs:
         if id not in movie_list:
             movie_list.append(id)
+    movie_list.sort()
     movie_list_str = str(movie_list)
 
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
-    c.execute("UPDATE accounts SET movie_list = ? WHERE accNum = ?", (movie_list_str,accNum))
+    c.execute("UPDATE accounts SET movie_list = ? WHERE accNum = ?",
+              (movie_list_str, accNum))
     conn.commit()
     conn.close()
 
 
-def removeMovies(accNum,movieIDs):
+def removeMovies(accNum, movieIDs):
     movie_list = []
     movie_list.extend(getMovies(accNum))
     for id in movieIDs:
@@ -114,7 +123,8 @@ def removeMovies(accNum,movieIDs):
 
     conn = sqlite3.connect('Databases/data.db')
     c = conn.cursor()
-    c.execute("UPDATE accounts SET movie_list = ? WHERE accNum = ?", (movie_list_str,accNum))
+    c.execute("UPDATE accounts SET movie_list = ? WHERE accNum = ?",
+              (movie_list_str, accNum))
     conn.commit()
     conn.close()
 

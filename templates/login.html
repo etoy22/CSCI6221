@@ -1,118 +1,131 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <style>
-body {
-  font-family: bradley hand, cursive;
-  background-image: url('https://playboxtechnology.com/wp-content/uploads/2021/11/PlayBox-OTT-CMS-Header-scaled.jpeg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-}
-span{
-color: 	white;
-}
-i{
-  position: relative;
-  left:-317px;
-  color:yellow;
-}
-::-webkit-input-placeholder{
-  color:beige;
-}
-.log{
-  width: 325px;
-  cursor: pointer;
-  font-size: 15px;
-  color: beige;
-  padding: 0px;
-}
-.log1{
-  position: relative;
-  left: 230px;
-  top: -22px
-}
-input{
-    height: 50px;
-    width: 75%;
-    border-radius: 40px;
-    border-color: yellowgreen;
-    padding: 0 0 0 40px;
-    background: rgba(255,255,255,0.1)
-}
-.form{
-    width: 380px;
-    height: 480px;
-    margin: 20% 5% 15% 30%;
-    background: rgba(255, 255, 255,.0);
-    position: relative;
-}
-a:link {
-  color: #D2691E;
-  background-color: transparent;
-}
-a:visited {
-  color: orange;
-  background-color: transparent;
-}
-a:hover {
-  color: yellow;
-  background-color: transparent;
-  text-decoration: underline;
-}
-</style>
-    </head>
-    <body>
-        <div class="form">
-            <form id="login-form" >
-                <span style="color:yellowgreen">Existing User?</span>
-                <br>
-                <span>Username</span>
-                <input type="text" name="username" id="username" placeholder="Enter your Username" required/>
-                <i class='bx bxs-user'></i>
-                <br>
-                <span>Password</span>
-                <input type="password" name="password" id="password" placeholder="Enter your Password" required/>
-                <i class='bx bxs-lock-alt'></i>
-                <br>
-                <br>
-                <input class="log" type="submit" name="Login" id="loginButton" value="Login">
-                <br>
-                <label><a href="/">Main Menu</a></label>
-                <br>
-                <label><a href="signup" class="log1">New User?</a></label>
-            </form>
-        </div>
-    </body>
-    <script>
-      const loginForm = document.querySelector('#login-form');
-      const loginButton = document.querySelector('#loginButton');
 
-      loginButton.addEventListener('click', function(event) {
-          event.preventDefault();
-          const formData = new FormData(loginForm);
-          fetch('/loginUser', {
-              method: 'POST',
-              body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-              const success = data.success;
-              if (!success) {
-                window.alert('Login failed. Username or password is wrong.');
-              }else{
-                window.location.href = "/library"
-              }
-          })
-          .catch(error => {
-              console.error(error);
-          });
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body {
+      font-family: bradley hand, cursive;
+      background-image: url('https://playboxtechnology.com/wp-content/uploads/2021/11/PlayBox-OTT-CMS-Header-scaled.jpeg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+
+    span {
+      color: white;
+    }
+
+    i {
+      position: relative;
+      left: -317px;
+      color: yellow;
+    }
+
+    ::-webkit-input-placeholder {
+      color: beige;
+    }
+
+    .log {
+      width: 325px;
+      cursor: pointer;
+      font-size: 15px;
+      color: beige;
+      padding: 0px;
+    }
+
+    .log1 {
+      position: relative;
+      left: 230px;
+      top: -22px
+    }
+
+    input {
+      height: 50px;
+      width: 75%;
+      border-radius: 40px;
+      border-color: yellowgreen;
+      padding: 0 0 0 40px;
+      background: rgba(255, 255, 255, 0.1)
+    }
+
+    .form {
+      width: 380px;
+      height: 480px;
+      margin: 20% 5% 15% 30%;
+      background: rgba(255, 255, 255, .0);
+      position: relative;
+    }
+
+    a:link {
+      color: #D2691E;
+      background-color: transparent;
+    }
+
+    a:visited {
+      color: orange;
+      background-color: transparent;
+    }
+
+    a:hover {
+      color: yellow;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form">
+    <form id="login-form">
+      <span style="color:yellowgreen">Existing User?</span>
+      <br>
+      <span>Username</span>
+      <input type="text" name="username" id="username" placeholder="Enter your Username" required />
+      <i class='bx bxs-user'></i>
+      <br>
+      <span>Password</span>
+      <input type="password" name="password" id="password" placeholder="Enter your Password" required />
+      <i class='bx bxs-lock-alt'></i>
+      <br>
+      <br>
+      <input class="log" type="submit" name="Login" id="loginButton" value="Login">
+      <br>
+      <label><a href="/">Main Menu</a></label>
+      <br>
+      <label><a href="signup" class="log1">New User?</a></label>
+    </form>
+  </div>
+</body>
+<script>
+  const loginForm = document.querySelector('#login-form');
+  const loginButton = document.querySelector('#loginButton');
+
+  loginButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    const formData = new FormData(loginForm);
+    fetch('/loginUser', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        const success = data.success;
+        if (!success) {
+          window.alert('Login failed. Username or password is wrong.');
+        } else {
+          window.location.href = "/library"
+        }
+      })
+      .catch(error => {
+        console.error(error);
       });
-      
-    </script>
+  });
+
+</script>
+
 </html>

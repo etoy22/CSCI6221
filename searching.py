@@ -10,8 +10,8 @@ api_key = '03645002b465428658913956c71ee9e7'
 
 def get_movie_details(movie_id):
     api_key = '03645002b465428658913956c71ee9e7'
-    response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}')
-    
+    response = requests.get(
+        f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}')
 
     movie = response.json()
     over = movie['overview'][:100]+"..."
@@ -19,15 +19,17 @@ def get_movie_details(movie_id):
         'ID': movie['id'],
         'Title': movie['title'],
         'Release_date': movie['release_date'],
-            'Overview': over
-        }
+        'Overview': over
+    }
+
 
 def movieSearch(movie_query):
 
     list = []
     # Search by movie
     api_key = '03645002b465428658913956c71ee9e7'
-    response = requests.get(f'https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={movie_query}')
+    response = requests.get(
+        f'https://api.themoviedb.org/3/search/movie?api_key={api_key}&query={movie_query}')
 
     # Parse the JSON response
     search_results = json.loads(response.text)
@@ -42,21 +44,23 @@ def movieSearch(movie_query):
         # print("----------")
     return list
 
+
 def actorSearch(actor_name):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
-    response = requests.get(f'https://api.themoviedb.org/3/search/person?api_key={api_key}&query={actor_name}')
+    response = requests.get(
+        f'https://api.themoviedb.org/3/search/person?api_key={api_key}&query={actor_name}')
     search_results = json.loads(response.text)
 
     # Search through all actors with the name
-    for actor_id in search_results ['results']:
+    for actor_id in search_results['results']:
         # Make a GET request to the TMDb API discover endpoint to get the movies that the actor has starred in
-        response = requests.get(f'https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_cast={actor_id}')
+        response = requests.get(
+            f'https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_cast={actor_id}')
         discover_results = json.loads(response.text)
 
         # print("Example to analysis")
         print(discover_results['results'])
-
 
         for result in discover_results['results']:
             over = result['overview'][:100]+"..."
@@ -71,18 +75,21 @@ def actorSearch(actor_name):
             list.append(my_dict)
     return list
 
-def actorMovieSearch(actor_name,movie_title):
+
+def actorMovieSearch(actor_name, movie_title):
     list = []
     # Make a GET request to the TMDb API search endpoint to get the actor's ID
-    response = requests.get(f'https://api.themoviedb.org/3/search/person?api_key={api_key}&query={actor_name}')
+    response = requests.get(
+        f'https://api.themoviedb.org/3/search/person?api_key={api_key}&query={actor_name}')
     search_results = json.loads(response.text)
 
     # Get the first actor's ID from the search results
-    for id in search_results ['results']:
+    for id in search_results['results']:
         actor_id = id['id']
 
         # Make a GET request to the TMDb API discover endpoint to get the movies that the actor has starred in
-        response = requests.get(f'https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_cast={actor_id}')
+        response = requests.get(
+            f'https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_cast={actor_id}')
         discover_results = json.loads(response.text)
 
         # Filter the movie results by searching for the movie title
@@ -100,12 +107,12 @@ def actorMovieSearch(actor_name,movie_title):
                 list.append(my_dict)
         return list
 
-# Takes an img and then returns the movies that are listed
+
 def imageSearch(img):
     path_to_tesseract = r"Tesseract-OCR\tesseract.exe"
     pytesseract.tesseract_cmd = path_to_tesseract
 
-    # Open image and then try to convert the image to text 
+    # Open image and then try to convert the image to text
     screen = Image.open("screenshot.png")
     text = pytesseract.image_to_string(screen)
 
@@ -114,14 +121,13 @@ def imageSearch(img):
     for line in lines:
         if line.strip():  # Check if the line is not empty
             searchTerms.append(line)
-            
-    value = [] 
+
+    value = []
     for search in searchTerms:
         hold = (movieSearch(search))
-        if len(hold)!=0:
+        if len(hold) != 0:
             value.extend(hold)
 
-    
     return value
 
 # print(movieSearch("The Shawshank Redemption"))

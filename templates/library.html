@@ -1,76 +1,118 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Library</title>
+	<style>
+		body {
+			font-family: bradley hand, cursive;
+			background-image: url('https://oldschoolgrappling.com/wp-content/uploads/2018/08/Background-opera-speeddials-community-web-simple-backgrounds.jpg');
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: cover;
+			background-position: center;
+		}
+
+		.c1,
+		.c2 {
+			height: 40px;
+			width: 15%;
+			border-radius: 25px;
+			border-color: black;
+			margin-right: 300px;
+			padding: 0 0 0 0px;
+			background: rgba(255, 255, 255, 0.3)
+		}
+
+		.page {
+			margin-left: 300px;
+			margin-top: 50px;
+		}
+
+		table {
+
+			width: 100%;
+			margin-top: 60px;
+			margin-left: 70px;
+		}
+
+		.t1 {
+			text-align: left;
+			padding: 10px;
+		}
+	</style>
 </head>
+
 <body>
 	<!-- Greeting message w	<h1>Hello, {{ name }}!</h1>
 ith the {{ user }} variable -->
-    <a href="search">
-        <input type="button" name="Search" id="Search" value="Add New Movies"/>
-    </a>
-    <input type="button" name="RemoveMovies" id="RemoveMovies" value="Remove Selected Movies" onclick="removeContent()"/>
-	<ul id="list"></ul>
-
+	<div class="page">
+		<a href="search">
+			<input class="c1" type="button" name="Search" id="Search" value="Add New Movies" />
+		</a>
+		<input class="c2" type="button" name="RemoveMovies" id="RemoveMovies" value="Remove Selected Movies"
+			onclick="removeContent()" />
+		<ul id="list"></ul>
+	</div>
 	<table>
-		<thead>
-		  <tr>
-			<th>Select</th>
-			<th>ID</th>
-			<th>Title</th>
-			<th>Release Date</th>
-			<th>Overview</th>
-		  </tr>
+		<thead class="t1">
+			<tr>
+				<th>Select</th>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Release Date</th>
+				<th>Overview</th>
+			</tr>
 		</thead>
 		<tbody>
-		  {% for movie in movies %}
+			{% for movie in movies %}
 			<tr>
-	          <td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td>
-			  <td>{{ movie.ID }}</td>
-			  <td>{{ movie.Title }}</td>
-			  <td>{{ movie.Release_date }}</td>
-			  <td>{{ movie.Overview }}</td>
+				<td><input type="checkbox" name="selected_movies[]" value="{{ movie.ID }}"></td>
+				<!-- Add a checkbox input element for each movie -->
+				<td>{{ movie.ID }}</td>
+				<td>{{ movie.Title }}</td>
+				<td>{{ movie.Release_date }}</td>
+				<td>{{ movie.Overview }}</td>
 			</tr>
-		  {% endfor %}
+			{% endfor %}
 		</tbody>
-	  </table>
-	  
+	</table>
+
 	<script>
 		// Function for removing content
 		function removeContent() {
 			const selectedMovies = [];
 			const checkboxes = document.getElementsByName('selected_movies[]');
-			
+
 			for (let i = 0; i < checkboxes.length; i++) {
 				if (checkboxes[i].checked) {
 					selectedMovies.push(checkboxes[i].value);
 				}
 			}
-			
+
 			console.log(selectedMovies);
 			// Make a HTTP POST request to the server
 			fetch('/remove_movies', {
 				method: 'POST',
 				headers: {
-				'Content-Type': 'application/json'
+					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({selectedMovies: selectedMovies})
+				body: JSON.stringify({ selectedMovies: selectedMovies })
 			})
-			.then(response => response.json())
-			.then(data => {
-				const success = data.success;
-				console.log("Success:",success)
-				if (!success) {
-				window.alert('Removed Nothing');
-				} else {
-				window.location.href = "/library"
-				}
-			})
-			.catch(error => console.error(error));
+				.then(response => response.json())
+				.then(data => {
+					const success = data.success;
+					console.log("Success:", success)
+					if (!success) {
+						window.alert('Removed Nothing');
+					} else {
+						window.location.href = "/library"
+					}
+				})
+				.catch(error => console.error(error));
 		}
 
-		
-		
 	</script>
 </body>
+
 </html>
