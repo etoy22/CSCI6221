@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, session
-import account as acc
-import searching as ser
+import python.account as acc
+import python.searching as ser
 import secrets
 import uuid
 

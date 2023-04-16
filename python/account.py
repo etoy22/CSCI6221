@@ -101,7 +101,7 @@ def addMovies(accNum, movieIDs):
     movie_list.extend(getMovies(accNum))
     for id in movieIDs:
         if id not in movie_list:
-            movie_list.append(id)
+            movie_list.append(int(id))
     movie_list.sort()
     movie_list_str = str(movie_list)
 
