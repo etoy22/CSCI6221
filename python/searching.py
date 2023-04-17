@@ -144,7 +144,7 @@ Given an image search for a movie
 
 
 def imageSearch(img):
-    # Download at https://github.com/tesseract-ocr/tesseract
+    # Download at https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe
     path_to_tesseract = r"Tesseract-OCR\tesseract.exe"
     pytesseract.tesseract_cmd = path_to_tesseract
 

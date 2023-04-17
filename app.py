@@ -4,6 +4,11 @@ import python.searching as ser
 import secrets
 import uuid
 
+'''
+To use the image based software you will first need to download
+https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe
+'''
+
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
